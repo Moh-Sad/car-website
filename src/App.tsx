@@ -19,9 +19,9 @@ import {
 } from 'lucide-react'
 import { Navbar, type TabType } from './components/Navbar'
 import { Footer } from './components/Footer'
-import { CarModal } from './components/CarModal'
 import { ContactPage } from './components/ContactPage'
 import { CarsPage } from './components/CarsPage'
+import { CarDetailPage } from './components/CarDetailPage'
 import { AboutPage } from './components/AboutPage'
 import { FEATURED_CARS, MARQUES } from './data/cars'
 import type { Car } from './data/cars'
@@ -29,12 +29,26 @@ import { ThemeProvider } from './context/ThemeContext'
 
 export function CarWebsite() {
   const [currentTab, setCurrentTab] = useState<TabType>('home')
-  const [selectedCar, setSelectedCar] = useState<Car | null>(null)
+  const [selectedCarDetail, setSelectedCarDetail] = useState<Car | null>(null)
   const [activeMarque, setActiveMarque] = useState<string | null>(null)
 
   const openHeroCar = () => {
     const heroCar = FEATURED_CARS.find((c) => c.id === 'alpine-blue-m-coupe') || FEATURED_CARS[0]
-    setSelectedCar(heroCar)
+    setSelectedCarDetail(heroCar)
+    setCurrentTab('car')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleTabChange = (tab: TabType) => {
+    setCurrentTab(tab)
+    setSelectedCarDetail(null)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleSelectCar = (car: any) => {
+    setSelectedCarDetail(car)
+    setCurrentTab('car')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const filteredCars = activeMarque
@@ -51,7 +65,7 @@ export function CarWebsite() {
       {/* Navbar Component with Active Tab State */}
       <Navbar
         currentTab={currentTab}
-        onTabChange={(tab) => setCurrentTab(tab)}
+        onTabChange={handleTabChange}
       />
 
       {/* Main Content Area */}
@@ -84,20 +98,14 @@ export function CarWebsite() {
               {/* CTA Buttons */}
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">
                 <button
-                  onClick={() => {
-                    setCurrentTab('car')
-                    window.scrollTo({ top: 0, behavior: 'smooth' })
-                  }}
+                  onClick={() => handleTabChange('car')}
                   className="inline-flex items-center gap-2 px-7 py-3 rounded-xl font-bold text-sm bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white shadow-lg shadow-blue-500/25 active:scale-95 transition-all cursor-pointer"
                 >
                   <span>Explore Cars</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => {
-                    setCurrentTab('about')
-                    window.scrollTo({ top: 0, behavior: 'smooth' })
-                  }}
+                  onClick={() => handleTabChange('about')}
                   className="inline-flex items-center gap-2 px-7 py-3 rounded-xl font-semibold text-sm bg-[var(--surface-secondary)] hover:bg-[var(--border-color)]/50 text-[var(--text-main)] border border-[var(--border-color)] transition-all cursor-pointer"
                 >
                   <span>Learn More</span>
@@ -211,7 +219,7 @@ export function CarWebsite() {
                   CURATED MARQUE PARTNERS
                 </span>
                 <button
-                  onClick={() => setCurrentTab('about')}
+                  onClick={() => handleTabChange('about')}
                   className="text-xs font-semibold text-[var(--primary)] hover:underline flex items-center gap-1 cursor-pointer"
                 >
                   Tier-1 Factory Certifications
@@ -248,7 +256,6 @@ export function CarWebsite() {
             {/* FEATURED CARS SECTION                                         */}
             {/* ============================================================== */}
             <section id="inventory" className="space-y-6 pt-4">
-              {/* Section Header */}
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
                   <div className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider text-[var(--primary)] uppercase mb-1.5">
@@ -264,13 +271,10 @@ export function CarWebsite() {
                 </div>
 
                 <button
-                  onClick={() => {
-                    setCurrentTab('car')
-                    window.scrollTo({ top: 0, behavior: 'smooth' })
-                  }}
+                  onClick={() => handleTabChange('car')}
                   className="inline-flex items-center gap-1.5 text-sm font-bold text-[var(--primary)] hover:text-[var(--primary-hover)] transition-colors self-start md:self-auto cursor-pointer"
                 >
-                  <span>View All Inventory (542)</span>
+                  <span>View All Inventory (524)</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -280,18 +284,15 @@ export function CarWebsite() {
                 {filteredCars.map((car) => (
                   <div
                     key={car.id}
-                    onClick={() => setSelectedCar(car)}
+                    onClick={() => handleSelectCar(car)}
                     className="group bg-[var(--surface)] border border-[var(--border-color)] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:border-[var(--primary)]/40 transition-all duration-300 flex flex-col cursor-pointer"
                   >
-                    {/* Card Image Thumbnail */}
                     <div className="relative aspect-[16/10] overflow-hidden bg-black/5">
                       <img
                         src={car.image}
                         alt={car.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                       />
-
-                      {/* Top Left Tag Badge */}
                       <div className="absolute top-3.5 left-3.5">
                         <span className="px-3 py-1 rounded-full text-xs font-bold tracking-wide bg-[var(--surface)]/90 backdrop-blur-md text-[var(--text-main)] border border-[var(--border-color)] shadow-sm">
                           {car.tag}
@@ -299,10 +300,8 @@ export function CarWebsite() {
                       </div>
                     </div>
 
-                    {/* Card Body */}
                     <div className="p-6 flex-1 flex flex-col justify-between">
                       <div>
-                        {/* Category & Stock */}
                         <div className="flex items-center justify-between text-xs mb-2">
                           <span className="font-bold tracking-wider text-[var(--primary)] uppercase">
                             {car.category}
@@ -312,7 +311,6 @@ export function CarWebsite() {
                           </span>
                         </div>
 
-                        {/* Title & Engine */}
                         <h3 className="text-xl font-extrabold text-[var(--text-main)] tracking-tight group-hover:text-[var(--primary)] transition-colors">
                           {car.title}
                         </h3>
@@ -320,7 +318,6 @@ export function CarWebsite() {
                           {car.engine}
                         </p>
 
-                        {/* Specs Icons Row */}
                         <div className="flex items-center gap-2 mt-5 text-xs text-[var(--text-secondary)]">
                           <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[var(--surface-secondary)] border border-[var(--border-color)]/60 font-medium">
                             <Gauge className="w-3.5 h-3.5 text-[var(--text-secondary)]" />
@@ -337,7 +334,6 @@ export function CarWebsite() {
                         </div>
                       </div>
 
-                      {/* Price and CTA Row */}
                       <div className="mt-6 pt-5 border-t border-[var(--border-color)] flex items-center justify-between">
                         <div>
                           <span className="text-[11px] font-medium text-[var(--text-secondary)] block">
@@ -351,7 +347,7 @@ export function CarWebsite() {
                         <button
                           onClick={(e) => {
                             e.stopPropagation()
-                            setSelectedCar(car)
+                            handleSelectCar(car)
                           }}
                           className="px-4 py-2.5 rounded-xl font-bold text-xs bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white shadow-md shadow-blue-500/20 active:scale-95 transition-all cursor-pointer"
                         >
@@ -371,7 +367,6 @@ export function CarWebsite() {
               id="standard"
               className="bg-[var(--surface-secondary)] border border-[var(--border-color)] rounded-3xl sm:rounded-[36px] p-8 sm:p-12 shadow-sm"
             >
-              {/* Header */}
               <div className="max-w-2xl">
                 <span className="text-xs font-bold tracking-wider text-[var(--primary)] uppercase block mb-2">
                   THE VELOCE STANDARD
@@ -384,9 +379,7 @@ export function CarWebsite() {
                 </p>
               </div>
 
-              {/* 3 Pillars Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                {/* Pillar 1 */}
                 <div className="bg-[var(--surface)] border border-[var(--border-color)] rounded-2xl p-6 sm:p-7 shadow-sm hover:shadow-md transition-shadow">
                   <div className="w-12 h-12 rounded-xl bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center mb-5">
                     <Sliders className="w-6 h-6 stroke-[2.2]" />
@@ -399,7 +392,6 @@ export function CarWebsite() {
                   </p>
                 </div>
 
-                {/* Pillar 2 */}
                 <div className="bg-[var(--surface)] border border-[var(--border-color)] rounded-2xl p-6 sm:p-7 shadow-sm hover:shadow-md transition-shadow">
                   <div className="w-12 h-12 rounded-xl bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center mb-5">
                     <Truck className="w-6 h-6 stroke-[2.2]" />
@@ -412,7 +404,6 @@ export function CarWebsite() {
                   </p>
                 </div>
 
-                {/* Pillar 3 */}
                 <div className="bg-[var(--surface)] border border-[var(--border-color)] rounded-2xl p-6 sm:p-7 shadow-sm hover:shadow-md transition-shadow">
                   <div className="w-12 h-12 rounded-xl bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center mb-5">
                     <RotateCcw className="w-6 h-6 stroke-[2.2]" />
@@ -429,22 +420,30 @@ export function CarWebsite() {
           </div>
         )}
 
-        {/* TAB 2: CAR */}
+        {/* TAB 2: CAR (Either Showroom Grid OR Dedicated Car Detail Page) */}
         {currentTab === 'car' && (
-          <CarsPage onSelectCar={(car) => setSelectedCar(car)} />
+          selectedCarDetail ? (
+            <CarDetailPage
+              car={selectedCarDetail}
+              onBack={() => {
+                setSelectedCarDetail(null)
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }}
+              onContactClick={() => handleTabChange('contact')}
+            />
+          ) : (
+            <CarsPage
+              onSelectCar={handleSelectCar}
+              onContactClick={() => handleTabChange('contact')}
+            />
+          )
         )}
 
         {/* TAB 3: ABOUT US */}
         {currentTab === 'about' && (
           <AboutPage
-            onBrowseCars={() => {
-              setCurrentTab('car')
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-            }}
-            onContactUs={() => {
-              setCurrentTab('contact')
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-            }}
+            onBrowseCars={() => handleTabChange('car')}
+            onContactUs={() => handleTabChange('contact')}
           />
         )}
 
@@ -454,9 +453,6 @@ export function CarWebsite() {
 
       {/* Footer Component on All Pages */}
       <Footer />
-
-      {/* Interactive Detail Modal */}
-      <CarModal car={selectedCar} onClose={() => setSelectedCar(null)} />
     </div>
   )
 }

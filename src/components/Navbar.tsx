@@ -46,11 +46,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled
           ? 'bg-[var(--surface)]/90 backdrop-blur-md shadow-sm border-b border-[var(--border-color)]'
           : 'bg-[var(--bg-page)]/95 backdrop-blur-sm border-b border-[var(--border-color)]/60'
-      }`}
+        }`}
     >
       {/* Main Nav Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -86,11 +85,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`px-4 py-2 text-sm font-semibold rounded-xl transition-all cursor-pointer ${
-                    isActive
-                      ? 'text-[var(--primary)] bg-[var(--surface-secondary)] border border-[var(--border-color)] font-bold shadow-xs'
-                      : 'text-[var(--text-main)] hover:text-[var(--primary)] hover:bg-[var(--surface-secondary)]/50 border border-transparent'
-                  }`}
+                  className={`px-4 py-2 text-sm font-semibold rounded-xl transition-all cursor-pointer ${isActive
+                      ? 'text-[var(--primary)] font-bold shadow-xs'
+                      : 'text-[var(--text-main)] hover:text-[var(--primary)]'
+                    }`}
                 >
                   {item.label}
                 </button>
@@ -117,11 +115,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Browse Cars Button (Switches to 'car' tab) */}
             <button
               onClick={() => handleNavClick('car')}
-              className={`hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all cursor-pointer ${
-                currentTab === 'car'
+              className={`hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all cursor-pointer ${currentTab === 'car'
                   ? 'bg-[var(--primary-hover)] text-white shadow-lg ring-2 ring-[var(--primary)]/30'
                   : 'bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white shadow-md shadow-blue-500/20 active:scale-[0.98]'
-              }`}
+                }`}
             >
               <span>Browse Cars</span>
             </button>
@@ -148,11 +145,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition-all cursor-pointer ${
-                    isActive
+                  className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition-all cursor-pointer ${isActive
                       ? 'text-[var(--primary)] bg-[var(--surface-secondary)] font-bold border border-[var(--border-color)]'
                       : 'text-[var(--text-main)] hover:bg-[var(--surface-secondary)]'
-                  }`}
+                    }`}
                 >
                   {item.label}
                 </button>
