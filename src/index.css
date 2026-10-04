@@ -1,0 +1,111 @@
+@import "tw-animate-css";
+@import "@fontsource-variable/geist";
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-page: #F7F9FC;
+    --surface: #FFFFFF;
+    --surface-secondary: #EEF2F7;
+    --primary: #2563EB;
+    --primary-hover: #1D4ED8;
+    --text-main: #0F172A;
+    --text-secondary: #64748B;
+    --border-color: #E2E8F0;
+    --success: #16A34A;
+  }
+
+  .dark {
+    --bg-page: #080D16;
+    --surface: #111827;
+    --surface-secondary: #182235;
+    --primary: #3B82F6;
+    --primary-hover: #60A5FA;
+    --text-main: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --border-color: #263449;
+    --success: #22C55E;
+  }
+}
+
+@theme {
+  --color-page: var(--bg-page);
+  --color-surface: var(--surface);
+  --color-surface-secondary: var(--surface-secondary);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-text-main: var(--text-main);
+  --color-text-secondary: var(--text-secondary);
+  --color-border-custom: var(--border-color);
+  --color-success-custom: var(--success);
+}
+
+/* Custom design system utility classes */
+.bg-theme-bg {
+  background-color: var(--bg-page);
+}
+.bg-theme-surface {
+  background-color: var(--surface);
+}
+.bg-theme-secondary {
+  background-color: var(--surface-secondary);
+}
+.bg-theme-primary {
+  background-color: var(--primary);
+}
+.bg-theme-primary:hover {
+  background-color: var(--primary-hover);
+}
+.text-theme-main {
+  color: var(--text-main);
+}
+.text-theme-secondary {
+  color: var(--text-secondary);
+}
+.text-theme-primary {
+  color: var(--primary);
+}
+.text-theme-success {
+  color: var(--success);
+}
+.border-theme {
+  border-color: var(--border-color);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  font-family: 'Geist Variable', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
